@@ -30,9 +30,11 @@ const user: Schema = new Schema({
         maxlength: 30,
     },
 })
-user.pre("save", async function (next: SaveOptions) {
-    if (!this.isModified("password")) return next()
+user.pre("save", async function () {
     this.password = await bcrypt.hash(this.password, 10)
-    next()
 })
+
+user.methods.comparePassword = async function (password: string) {
+    return await bcrypt.compare(password, this.password)
+}
 export const User = model("User", user)

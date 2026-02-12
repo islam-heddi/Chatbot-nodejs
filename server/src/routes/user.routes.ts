@@ -4,6 +4,6 @@ import { Router } from "express"
 const router = Router();
 
 router.get("/", getAllUsers)
-router.post("register", registerUser)
+router.post("/register", registerUser)
 
 export default router
