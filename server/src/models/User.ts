@@ -1,12 +1,16 @@
-import { Schema, model } from "mongoose";
-import { SaveOptions } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt"
 
-const user: Schema = new Schema({
+interface IUser extends Document {
+    password: string;
+    isModified(path?: string): boolean;
+    comparePassword(password: string): Promise<boolean>;
+}
+
+const userSchema: Schema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true,
         trim: true,
         lowercase: true,
         minlength: 3,
@@ -25,16 +29,15 @@ const user: Schema = new Schema({
         type: String,
         required: true,
         trim: true,
-        lowercase: true,
         minlength: 3,
-        maxlength: 30,
+        maxlength: 100,
     },
 })
-user.pre("save", async function () {
+userSchema.pre("save", async function (this: IUser, next) {
     this.password = await bcrypt.hash(this.password, 10)
 })
 
-user.methods.comparePassword = async function (password: string) {
+userSchema.methods.comparePassword = async function (password: string) {
     return await bcrypt.compare(password, this.password)
 }
-export const User = model("User", user)
+export const User = model<IUser>("User", userSchema)

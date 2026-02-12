@@ -31,14 +31,13 @@ export const registerUser = async (req: Request, res: Response) => {
 }
 
 export const loginUser = async (req: Request, res: Response) => {
-    const { username, password } = req.body
+    const { email, password } = req.body
     try {
-        const user = await User.findOne({ username })
+        const user = await User.findOne({ email })
         if (!user) {
-            return res.status(404).json({ message: "User not found" })
+            return res.status(404).json({ message: "Email not found" })
         }
-        const checkPassword = await bcrypt.compare(user.password, password)
-
+        const checkPassword = await (user as any).comparePassword(password)
         if (!checkPassword) return res.status(401).json({ message: "Invalid password" })
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" })
         res.cookie("token", token, {
