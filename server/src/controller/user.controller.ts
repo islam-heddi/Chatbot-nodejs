@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { User } from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { AuthRequest } from "../Types/Request.type.js";
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
@@ -9,6 +10,23 @@ export const getAllUsers = async (req: Request, res: Response) => {
     return res.status(200).json(users);
   } catch (error) {
     return res.status(500).json({ message: "Error fetching users" });
+  }
+};
+
+export const getAuthUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req as AuthRequest;
+    if (!userId)
+      return res.status(404).json({
+        message: "user id not found",
+      });
+    const user = await User.findById(userId);
+    return res.status(200).json(user);
+  } catch (error: any) {
+    return res.status(500).json({
+      error: "internal error message",
+      message: error.message,
+    });
   }
 };
 
