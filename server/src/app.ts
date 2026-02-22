@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import swaggerUI from "swagger-ui-express";
 import path from "path";
 import YAML from "yamljs";
+import aiRoute from "./routes/ai.routes.js"
 
 const documentationFile = YAML.load(path.join("doc", "api.yml"));
 
@@ -20,6 +21,7 @@ app.get("/api/", (_req: Request, res: Response) => {
   res.send("hello islam");
 });
 app.use("/api/user", userRoute);
+app.use("/api/ai", aiRoute);
 app.use("/api/doc", swaggerUI.serve, swaggerUI.setup(documentationFile));
 
 const PORT = process.env.PORT || 5000;
