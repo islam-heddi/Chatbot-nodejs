@@ -11,6 +11,10 @@ servers:
 tags:
   - name: Users
     description: User management endpoints
+  - name: Chat
+    description: Chat management endpoints
+  - name: Messages
+    description: Message management endpoints
 
 paths:
   /api/user/login:
@@ -81,6 +85,83 @@ paths:
           "500":
             description: Internal server error
 
+
+  /api/chat/get:
+    get:
+      tags:
+        - Chat
+      summary: get all the chats by user id
+      requestBody:
+        required: true
+        array: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Chat"
+      responses:
+        "200":
+          description: Chats returned
+        "404":
+          description: User not found
+        "500":
+          description: Internal server error
+  /api/chat/create:
+    post:
+      tags:
+        - Chat
+      summary: create new chat
+      requestBody:
+        required: true
+        array: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Chat"
+      responses:
+        "201":
+          description: Chat created
+        "404":
+          description: User not found
+        "500":
+         description: Internal server error
+  /api/chat/update:
+    patch:
+      tags:
+        - Chat
+      summary: update chat
+      requestBody:
+        required: true
+        array: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Chat"
+      responses:
+        "200":
+          description: update chat
+        "404":
+          description: User not found
+        "500":
+          description: Internal server error
+  /api/chat/delete/:id:
+    delete:
+      tags:
+        - Chat
+      summary: delete chat
+      requestBody:
+        required: true
+        array: true
+        content:
+          application/json:
+            chat deleted
+      responses:
+        "200":
+          description: chat deleted
+        "404":
+          description: User not found
+        "500":
+          description: Internal server error
+    
 components:
   schemas:
     User:
