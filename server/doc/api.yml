@@ -161,7 +161,78 @@ paths:
           description: User not found
         "500":
           description: Internal server error
-    
+  
+  /api/message/get/:id:
+    get:
+      tags:
+        - Messages
+      summary: get all the messages by message id
+      requestBody:
+        required: true
+        array: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Message"
+      responses:
+        "200":
+          description: messages returned
+        "500":
+          description: Internal server error
+  /api/message/getChatMessage/:chatId:
+    get:
+      tags:
+        - Messages
+      summary: get all the messages by chat id
+      requestBody:
+        required: true
+        array: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Message"
+      responses:
+        "200":
+          description: messages returned
+        "500":
+          description: Internal server error
+  /api/message/getUserMesage:
+    get:
+      tags:
+        - Messages
+      summary: get all the messages by user id
+      requestBody:
+        required: true
+        array: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Message"
+      responses:
+        "200":
+          description: messages returned
+        "500":
+          description: Internal server error
+  /api/message/prompt:
+    post:
+      tags:
+        - Messages
+      summary: get all the messages by user id
+      requestBody:
+        required: true
+        array: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Message"
+      responses:
+        "201":
+          description: messages returned
+        "404":
+          description: chat not found
+        "500":
+          description: Internal server error
+  
 components:
   schemas:
     User:
@@ -185,9 +256,11 @@ components:
         userId:
           type: string
         createdAt:
-          type: DATE
+          type: string
+          format: date-time
         updatedAt:
           type: string
+          format: date-time
       required:
         - userId
         - name
@@ -201,11 +274,16 @@ components:
         senderId:
           type: string
         role:
-          type: System | User
+          type: string
+          enum:
+            - System
+            - User
         createdAt:
-          type: DATE
+          type: string
+          format: date-time
         updatedAt:
-          type: DATE
+          type: string
+          format: date-time
       required:
         - content
         - email
