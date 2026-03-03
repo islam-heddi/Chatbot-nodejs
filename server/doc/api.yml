@@ -6,39 +6,32 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:8000
+  - url: http://localhost:5000
 
 tags:
   - name: Users
     description: User management endpoints
-  - name: No name
-    description: test the api
 
 paths:
-  /api/:
-    get:
-      tags:
-        - No name
-      summary: simple message
-      responses:
-        "200":
-          description: simple message
-
-  /api/users:
-    get:
+  /api/user/login:
+    post:
       tags:
         - Users
-      summary: Get all users
+      summary: Login a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
       responses:
-        "200":
-          description: List of users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/User"
-
+        "201":
+          description: User created
+        "404":
+          description: Email not found
+        "401":
+          description: Invalid password
+  /api/user/register:
     post:
       tags:
         - Users
@@ -50,8 +43,43 @@ paths:
             schema:
               $ref: "#/components/schemas/User"
       responses:
-        "201":
+        "200":
           description: User created
+        "500":
+          description: Internal server error
+  /api/user/getAuth:
+    get:
+      tags:
+        - Users
+      summary: get authenticated user based on the JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: User returned
+        "500":
+          description: Internal server error
+  /api/user/:
+      get:
+        tags:
+          - Users
+        summary: get all users
+        requestBody:
+          required: true
+          array: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        responses:
+          "200":
+            description: User returned
+          "500":
+            description: Internal server error
 
 components:
   schemas:
@@ -62,6 +90,43 @@ components:
           type: string
         email:
           type: string
+        password:
+          type: string
       required:
         - name
         - email
+        - password
+    Chat:
+      type: object
+      properties:
+        name:
+          type: string
+        userId:
+          type: string
+        createdAt:
+          type: DATE
+        updatedAt:
+          type: string
+      required:
+        - userId
+        - name
+    Message:
+      type: object
+      properties:
+        content:
+          type: string
+        chatId:
+          type: string
+        senderId:
+          type: string
+        role:
+          type: System | User
+        createdAt:
+          type: DATE
+        updatedAt:
+          type: DATE
+      required:
+        - content
+        - email
+        - role
+
