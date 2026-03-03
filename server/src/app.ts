@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import { connectDB } from "./db/db.js";
 dotenv.config();
 import userRoute from "./routes/user.routes.js";
-import chatRoute from "./routes/chat.routes.js"
+import chatRoute from "./routes/chat.routes.js";
+import messageRoute from "./routes/message.routes.js"
 import cookieParser from "cookie-parser";
 import swaggerUI from "swagger-ui-express";
 import path from "path";
@@ -24,6 +25,7 @@ app.get("/api/", (_req: Request, res: Response) => {
 app.use("/api/user", userRoute);
 app.use("/api/ai", aiRoute);
 app.use("/api/chat", chatRoute);
+app.use("/api/message", messageRoute);
 app.use("/api/doc", swaggerUI.serve, swaggerUI.setup(documentationFile));
 
 const PORT = process.env.PORT || 5000;
