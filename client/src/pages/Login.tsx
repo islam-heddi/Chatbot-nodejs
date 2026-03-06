@@ -9,7 +9,7 @@ function Login() {
   const [password, setPassword] = useState<string>("")
   return (
     <div className="grid place-items-center h-screen">
-      <div className="p-5 m-2 border flex flex-col gap-4">
+      <div className="rounded-2xl p-5 m-2 border flex flex-col gap-4">
         <h1>Login</h1>
         <p>fill the information below to proceed</p>
         <Label>Email</Label>
