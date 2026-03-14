@@ -1,7 +1,7 @@
-
+import ChatBot from "@/components/ChatBot"
 function Chat() {
   return (
-    <div>Chat</div>
+    <div><ChatBot /></div>
   )
 }
 
