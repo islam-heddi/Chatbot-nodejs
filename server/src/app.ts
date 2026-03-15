@@ -11,6 +11,7 @@ import swaggerUI from "swagger-ui-express";
 import path from "path";
 import YAML from "yamljs";
 import aiRoute from "./routes/ai.routes.js"
+import cors from "cors"
 
 const documentationFile = YAML.load(path.join("doc", "api.yml"));
 
@@ -19,8 +20,13 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ["GET","POST","PATCH","PUT","DELETE"],
+  credentials: true
+}))
 app.get("/api/", (_req: Request, res: Response) => {
-  res.send("hello islam");
+  res.send("Your app is healthy");
 });
 app.use("/api/user", userRoute);
 app.use("/api/ai", aiRoute);
