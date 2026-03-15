@@ -28,7 +28,9 @@ export default function ChatBot() {
   }]
   return (
     <div className="flex flex-col">
+      <div className="flex flex-col h-[80vh] overflow-y-scroll">
       {fakeMessage.map((value,index) => <Fragment key={index}><Message role={value.role} message={value.message} /></Fragment>)}
+      </div>
       <SendMessage />
     </div>
   )
