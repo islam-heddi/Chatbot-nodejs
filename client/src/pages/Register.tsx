@@ -3,10 +3,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { api } from "@/utils/api"
 import { REGISTER } from "@/utils/constants"
+import type { AxiosResponse } from "axios"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function Register() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState<string>("")
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -14,7 +17,10 @@ function Register() {
   const handleRegister = async () => {
     api.post(REGISTER, {
       email,username,password
-    }).then(res => console.log(res))
+    }).then((res: AxiosResponse) => {
+      console.log(res)
+      navigate("/chat")
+    })
     .catch(err => console.log(err))
   }
 

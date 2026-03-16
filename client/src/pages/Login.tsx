@@ -6,14 +6,19 @@ import { LOGIN } from "@/utils/constants"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import type { AxiosError, AxiosResponse } from "axios"
+import { useNavigate } from "react-router-dom"
 
 function Login() {
+  const navigate = useNavigate()
   const [email,setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const handleLogin = () => {
     api.post(LOGIN, {
       email, password
-    }).then((res: AxiosResponse) => console.log(res))
+    }).then((res: AxiosResponse) => {
+      console.log(res)
+      navigate("/chat")
+    })
     .catch((err: AxiosError) => console.log(err))
   }
   return (
