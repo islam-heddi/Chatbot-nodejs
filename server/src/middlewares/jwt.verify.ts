@@ -7,7 +7,6 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token =
       req.cookies?.token || req.headers["authorization"]?.split(" ")[1];
-    console.log(token);
     if (!token || token == undefined)
       return res.status(404).json({
         error: "authentification error",
