@@ -7,29 +7,13 @@ interface msg {
   message: string
 }
 export default function ChatBot() {
-  const fakeMessage: msg[] = [ {
-    role: "User",
-    message: "Hi"
-  },{
-    role: "System",
-    message: "How can i assist you today"
-  } ,{
-    role: "User",
-    message: "fix my code"
-  },{
-    role: "System",
-    message: "ok just send me your code"
-  },{
-    role:"User",
-    message: "Nulla laborum reprehenderit ullamco proident ad incididunt esse anim pariatur anim cillum. Commodo incididunt sint ullamco ut. Ea eu est sint labore exercitation quis laboris sint eu consequat. Lorem consectetur enim occaecat ea nisi aliquip et eiusmod reprehenderit mollit aute adipisicing ad.Sit consequat irure fugiat et esse minim. Consectetur commodo anim duis labore amet id. Ipsum ullamco non ex aliquip quis deserunt est cillum qui ea commodo. Proident minim excepteur culpa cupidatat eu qui laborum velit dolore id nisi dolore laborum incididunt."
-  },{
-    role:"System",
-    message: "Nulla laborum reprehenderit ullamco proident ad incididunt esse anim pariatur anim cillum. Commodo incididunt sint ullamco ut. Ea eu est sint labore exercitation quis laboris sint eu consequat. Lorem consectetur enim occaecat ea nisi aliquip et eiusmod reprehenderit mollit aute adipisicing ad.Sit consequat irure fugiat et esse minim. Consectetur commodo anim duis labore amet id. Ipsum ullamco non ex aliquip quis deserunt est cillum qui ea commodo. Proident minim excepteur culpa cupidatat eu qui laborum velit dolore id nisi dolore laborum incididunt."
-  }]
+  const fakeMessage: msg[] = []
+
+
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col h-[80vh] overflow-y-scroll">
-      {fakeMessage.map((value,index) => <Fragment key={index}><Message role={value.role} message={value.message} /></Fragment>)}
+      <div className="flex flex-col h-[80vh] overflow-y-scroll w-[75vw]">
+      {fakeMessage.length < 1? <p className="p-4 grid place-items-center h-screen font-bold text-2xl">ask or start a new message</p> :fakeMessage.map((value,index) => <Fragment key={index}><Message role={value.role} message={value.message} /></Fragment>)}
       </div>
       <SendMessage />
     </div>

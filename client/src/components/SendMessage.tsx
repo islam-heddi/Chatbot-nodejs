@@ -7,7 +7,7 @@ function SendMessage() {
         setMessage("")
     }
   return (
-    <div className="flex flex-row gap-4 p-3 m-5"><Input type="text" placeholder="enter your message" onKeyDown={(event) => {if(event.key == "Enter") {handleSend()}}} value={message} onChange={(e) => setMessage(e.target.value)} /><Button onClick={() => handleSend()}>Send</Button></div>
+    <div className="flex flex-row gap-4 p-3 m-5 w-[70vw]"><Input type="text" placeholder="enter your message" onKeyDown={(event) => {if(event.key == "Enter") {handleSend()}}} value={message} onChange={(e) => setMessage(e.target.value)} /><Button onClick={() => handleSend()}>Send</Button></div>
   )
 }
 

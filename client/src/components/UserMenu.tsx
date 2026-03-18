@@ -1,7 +1,38 @@
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 function UserMenu() {
   return (
-    <div className="flex flex-row gap-5"><div>User name</div><div>More</div></div>
+    <div className="flex flex-row justify-between items-center gap-5 p-2.5 border-r-2">
+      <div>User name</div>
+         <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Open</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-40" align="start">
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>User name</DropdownMenuLabel>
+          <DropdownMenuItem>
+            Profile
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            Settings
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem>
+            <span className="text-red-500">Sign out</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+    </div>
   )
 }
 
