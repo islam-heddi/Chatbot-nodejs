@@ -7,7 +7,13 @@ interface msg {
   message: string
 }
 export default function ChatBot() {
-  const fakeMessage: msg[] = []
+  const fakeMessage: msg[] = [{
+    role: "User",
+    message: "lorem"
+  },{
+    role: "System",
+    message: "lorem"
+  },]
 
 
   return (

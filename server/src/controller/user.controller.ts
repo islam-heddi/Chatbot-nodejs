@@ -4,6 +4,21 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { AuthRequest } from "../Types/Request.type.js";
 
+export const signOut = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req as AuthRequest;
+    if (!userId)
+      return res.status(404).json({
+        message: "user id not found",
+      });
+    
+    res.clearCookie("token")
+    return res.status(200).send("sign out successfully")
+  } catch (error) {
+    return res.status(500).json({ message: "Error deconnect user",error });
+  }
+}
+
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find();

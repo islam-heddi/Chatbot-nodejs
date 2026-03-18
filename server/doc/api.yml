@@ -53,6 +53,16 @@ paths:
           description: User created
         "500":
           description: Internal server error
+  /api/user/signout:
+    delete:
+      tags:
+        - Users
+      summary: sign out a user
+      responses:
+        "200":
+          description: User sign out
+        "500":
+          description: Internal server error
   /api/user/getAuth:
     get:
       tags:
