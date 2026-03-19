@@ -6,11 +6,16 @@ import { api } from "@/utils/api"
 import { CREATE_CHAT, PROMPT } from "@/utils/constants"
 import { useUser } from "@/context/User"
 import { useHistory } from "@/context/History"
+import { useShallow } from "zustand/shallow"
 function SendMessage() {
     const [loading, start] = useTransition()
     const chatId = useChat(state => state.chatId)
     const userId = useUser(state => state.userId)
     const addChat = useHistory(state => state.addChat)
+    const {updateChatId, updateChatName} = useChat(useShallow(state => ({
+      updateChatId: state.updateChatId,
+      updateChatName: state.updateChatName
+    })))
     const addMessages = useChat(state => state.addMessages)
     const [message,setMessage] = useState<string>("")
     const handleSend = () => {
@@ -23,6 +28,8 @@ function SendMessage() {
                   name: res.data.name,
                   createdAt: res.data.createdAt
               })
+              updateChatId(res.data._id)
+              updateChatName(res.data.name)
           })
           .catch(err => console.log(err))
         }
@@ -36,7 +43,7 @@ function SendMessage() {
             chatId,
             message
           })
-          .then(res => addMessages(res.data))
+          .then(res => addMessages(res.data.result))
           .catch(err => console.log(err))
         })
     }
