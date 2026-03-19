@@ -1,26 +1,39 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import { useLocation,useNavigate } from 'react-router-dom'
 import { api } from '@/utils/api'
 import { GET_AUTH_USER } from '@/utils/constants'
+import { useUser } from './User'
+import * as React from 'react';
 
 function Auth({children}: {children: React.ReactNode}) {
+
+const updateUserId = useUser(state => state.updateUserId);
+const updateEmail = useUser(state => state.updateEmail);
+const updateUsername = useUser(state => state.updateUsername);
     const navigate = useNavigate()
     const location = useLocation()
     const unprotected: string[] = ["/login", "/register", "/"]
     useEffect(() => {
-        console.log(location.pathname)
-        api.get(GET_AUTH_USER)
-        .then(() => {
-            if(unprotected.find(a => a == location.pathname)?.length)
-                navigate("/chat")
+    api.get(GET_AUTH_USER)
+        .then((res) => {
+            const isUnprotected = unprotected.includes(location.pathname);
+
+            updateUsername(res.data.username);
+            updateUserId(res.data._id);
+            updateEmail(res.data.email);
+
+            if (isUnprotected) {
+                navigate("/chat");
             }
-        )
+        })
         .catch(() => {
-            if(!unprotected.find(a => a == location.pathname)?.length)
-                navigate("/login")
+            const isUnprotected = unprotected.includes(location.pathname);
+
+            if (!isUnprotected) {
+                navigate("/login");
             }
-        )
-    },[location])
+        });
+}, [location.pathname, updateUsername, updateUserId, updateEmail, navigate]);
 
   return (
     children
@@ -28,3 +41,4 @@ function Auth({children}: {children: React.ReactNode}) {
 }
 
 export default Auth
+
