@@ -1,8 +1,9 @@
 import {create} from "zustand"
+import { persist } from "zustand/middleware"
 
 interface IChat {
-    chatId: string,
-    chatName: string,
+    _id: string,
+    name: string,
     createdAt?: string,
     updatedAt?: string
 }
@@ -14,11 +15,13 @@ type HistoryType = {
     resetChat: () => void
 }
 
-export const useHistory = create<HistoryType>()((set, get) => ({
+export const useHistory = create<HistoryType>()(persist((set, get) => ({
     chats: [],
     updateChats: (chats: IChat[]) => set({chats}),
     addChat: (chat: IChat) => set({chats: [...get().chats, chat]}),
     resetChat: () => set({
         chats: []
     })
+}), {
+    name: "history-store"
 }))

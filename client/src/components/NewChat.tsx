@@ -12,8 +12,8 @@ function NewChat() {
             userId
         }).then((res) => {
             addChat({
-                chatId: res.data._id,
-                chatName: res.data.name,
+                _id: res.data._id,
+                name: res.data.name,
                 createdAt: res.data.createdAt
             })
         })
