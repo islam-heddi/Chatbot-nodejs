@@ -2,9 +2,13 @@ import {create} from "zustand"
 import { persist } from "zustand/middleware";
 
 interface IMessage {
-  id: string,
+  _id?: string,
   role: "User" | "System",
-  message: string
+  content: string,
+  chatId?: string,
+  senderId?: string,
+  createdAt?: string,
+  updatedAt?: string
 }
 
 type ChatType = {
