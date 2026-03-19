@@ -17,6 +17,6 @@ export default function History() {
     .catch((err) => console.log(err))
    }, [updateChats])
   return (
-    <div className="flex flex-col items-center w-2xl h-[90vh] border-r-2 max-w-2xs overflow-y-scroll"><NewChat />{chats.length < 1? <p className="justify-self-center">No Message passed yet</p>: <div className="w-full">{chats.map((value,index) => <Fragment key={index}><ChatRoomComponent name={value.name} /></Fragment>)}</div>}</div>
+    <div className="flex flex-col items-center w-2xl h-[90vh] border-r-2 max-w-2xs overflow-y-scroll"><NewChat />{chats.length < 1? <p className="justify-self-center">No Message passed yet</p>: <div className="w-full">{chats.map((value,index) => <Fragment key={index}><ChatRoomComponent id={value._id} name={value.name} /></Fragment>)}</div>}</div>
   )
 }

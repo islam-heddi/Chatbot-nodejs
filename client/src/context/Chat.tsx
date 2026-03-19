@@ -1,4 +1,5 @@
 import {create} from "zustand"
+import { persist } from "zustand/middleware";
 
 interface IMessage {
   id: string,
@@ -16,7 +17,7 @@ type ChatType = {
     addMessages: (message: IMessage) => void
 }
 
-export const useChat = create<ChatType>()((set, get) => ({
+export const useChat = create<ChatType>()(persist((set, get) => ({
     chatId: "",
     chatName: "",
     messages: [],
@@ -24,4 +25,6 @@ export const useChat = create<ChatType>()((set, get) => ({
     updateChatName: (name: string) => set({chatName: name}),
     updateMessages: (messages: IMessage[]) => set({messages}),
     addMessages: (message) => set({messages: [...get().messages, message]})  
+}), {
+    name: "chat-store"
 }))
