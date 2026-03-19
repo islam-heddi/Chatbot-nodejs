@@ -7,6 +7,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useChat } from "@/context/Chat"
+import { useHistory } from "@/context/History"
 import { useUser } from "@/context/User"
 import { api } from "@/utils/api"
 import { SIGN_OUT_USER } from "@/utils/constants"
@@ -14,13 +16,21 @@ import { useNavigate } from "react-router-dom"
 import { useShallow } from "zustand/react/shallow"
 
 function UserMenu() {
-  const {username} = useUser(useShallow(state => ({
-    username: state.username
+  const {username, resetUser} = useUser(useShallow(state => ({
+    username: state.username,
+    resetUser: state.resetUser
   })))
+  const resetChat = useChat(state => state.resetChat)
+  const resetHistory = useHistory(state => state.resetChat)
   const navigate = useNavigate()
   const handleSignOut = async () => {
     api.delete(SIGN_OUT_USER)
-    .then(() => navigate("/login"))
+    .then(() => {
+      navigate("/login")
+      resetUser()
+      resetChat()
+      resetHistory
+    })
     .catch(err => console.log(err))
   }
   return (

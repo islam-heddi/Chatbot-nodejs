@@ -19,6 +19,7 @@ type ChatType = {
     updateChatName: (name: string) => void
     updateMessages: (messages: IMessage[]) => void
     addMessages: (message: IMessage) => void
+    resetChat: () => void
 }
 
 export const useChat = create<ChatType>()(persist((set, get) => ({
@@ -28,7 +29,12 @@ export const useChat = create<ChatType>()(persist((set, get) => ({
     updateChatId: (id: string) => set({chatId: id}),
     updateChatName: (name: string) => set({chatName: name}),
     updateMessages: (messages: IMessage[]) => set({messages}),
-    addMessages: (message) => set({messages: [...get().messages, message]})  
+    addMessages: (message) => set({messages: [...get().messages, message]}),
+    resetChat: () => set({
+        chatId: "",
+        chatName: "",
+        messages: [],
+    })
 }), {
     name: "chat-store"
 }))

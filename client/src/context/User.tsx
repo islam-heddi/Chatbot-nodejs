@@ -8,6 +8,7 @@ type UserStore = {
   updateUsername: (username: string) => void;
   updateUserId: (userId: string) => void;
   updateEmail: (email: string) => void;
+  resetUser: () => void;
 }
 
 export const useUser = create<UserStore>()(
@@ -20,6 +21,11 @@ export const useUser = create<UserStore>()(
       updateUsername: (username) => set({ username }),
       updateUserId: (userId) => set({ userId }),
       updateEmail: (email) => set({ email }),
+      resetUser: () => set({
+        userId: "default",
+        username: "default",
+        email: "",
+      })
     }),
     {
       name: "user-store",
