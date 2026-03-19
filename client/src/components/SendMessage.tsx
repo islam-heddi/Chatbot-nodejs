@@ -20,7 +20,7 @@ function SendMessage() {
             chatId,
             message
           })
-          .then(res => console.log(res))
+          .then(res => addMessages(res.data))
           .catch(err => console.log(err))
         })
     }
