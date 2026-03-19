@@ -3,13 +3,29 @@ import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { useState, useTransition } from "react"
 import { api } from "@/utils/api"
-import { PROMPT } from "@/utils/constants"
+import { CREATE_CHAT, PROMPT } from "@/utils/constants"
+import { useUser } from "@/context/User"
+import { useHistory } from "@/context/History"
 function SendMessage() {
     const [loading, start] = useTransition()
     const chatId = useChat(state => state.chatId)
+    const userId = useUser(state => state.userId)
+    const addChat = useHistory(state => state.addChat)
     const addMessages = useChat(state => state.addMessages)
     const [message,setMessage] = useState<string>("")
     const handleSend = () => {
+        if(chatId == ""){
+          api.post(CREATE_CHAT, {
+              userId
+          }).then((res) => {
+              addChat({
+                  _id: res.data._id,
+                  name: res.data.name,
+                  createdAt: res.data.createdAt
+              })
+          })
+          .catch(err => console.log(err))
+        }
         setMessage("")
         addMessages({
           content: message,
