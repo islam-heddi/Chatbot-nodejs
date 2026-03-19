@@ -38,13 +38,16 @@ function SendMessage() {
           content: message,
           role: "User",
         })
-        start(() => {
-          api.post(PROMPT, {
-            chatId,
-            message
-          })
-          .then(res => addMessages(res.data.result))
-          .catch(err => console.log(err))
+        start(async () => {
+          try {
+            const res = await api.post(PROMPT, {
+              chatId,
+              message
+            })  
+            addMessages(res.data.result)
+          } catch (err) {
+            console.log(err)
+          }
         })
     }
   return (
