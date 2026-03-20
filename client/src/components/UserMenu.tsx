@@ -51,7 +51,7 @@ function UserMenu() {
           <DropdownMenuItem onClick={() => navigate("/profile")}>
             Profile
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/settings")}>
             Settings
           </DropdownMenuItem>
           
