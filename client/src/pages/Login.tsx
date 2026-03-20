@@ -1,3 +1,4 @@
+import botPic from "@/assets/Robot-Icon_Carolina-Blues.jpg"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -24,6 +25,7 @@ function Login() {
   return (
     <div className="grid place-items-center h-screen">
       <div className="rounded-2xl p-5 m-2 border flex flex-col gap-4">
+        <img src={botPic}  className="size-32"/>
         <h1>Login</h1>
         <p>fill the information below to proceed</p>
         <Label>Email</Label>
