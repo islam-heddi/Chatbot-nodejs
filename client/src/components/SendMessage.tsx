@@ -51,7 +51,7 @@ function SendMessage() {
         })
     }
   return (
-    <div className="flex flex-row gap-4 p-3 m-5 w-[70vw]"><Input type="text" placeholder="enter your message" onKeyDown={(event) => {if(event.key == "Enter" && !loading) {handleSend()}}} value={message} onChange={(e) => setMessage(e.target.value)} /><Button disabled={loading} onClick={() => handleSend()}>Send</Button></div>
+    <div className="flex flex-row gap-4 p-3 m-5 w-[70vw] max-[1024px]:w-[90vw]"><Input type="text" placeholder="enter your message" onKeyDown={(event) => {if(event.key == "Enter" && !loading) {handleSend()}}} value={message} onChange={(e) => setMessage(e.target.value)} /><Button disabled={loading} onClick={() => handleSend()}>Send</Button></div>
   )
 }
 
