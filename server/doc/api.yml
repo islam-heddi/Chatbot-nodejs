@@ -96,6 +96,52 @@ paths:
             description: User returned
           "500":
             description: Internal server error
+  /api/user/updatePassword:
+      patch:
+        tags:
+          - Users
+        summary: update the user password
+        requestBody:
+          required: true
+          array: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        responses:
+          "200":
+            description: password changed successfully
+          "404":
+            description: user id not found
+          "404":
+            description: email not found
+          "401":
+            description: password does not match
+          "500":
+            description: Internal server error
+  /api/user/updateInformation:
+      patch:
+        tags:
+          - Users
+        summary: update the user information
+        requestBody:
+          required: true
+          array: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        responses:
+          "200":
+            description: user changed successfully
+          "404":
+            description: user id not found
+          "404":
+            description: email not found
+          "401":
+            description: password invalid
+          "500":
+            description: Internal server error
 
 
   /api/chat/get:

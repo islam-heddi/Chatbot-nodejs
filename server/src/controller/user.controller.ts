@@ -92,3 +92,52 @@ export const loginUser = async (req: Request, res: Response) => {
       .json({ message: "Error logging in", error: error.message });
   }
 };
+
+export const updateInformation = async (req: Request, res: Response) => {
+  const {email, username, password} = req.body;
+  try {
+    const { userId } = req as AuthRequest;
+    if (!userId)
+      return res.status(404).json({
+        message: "user id not found",
+      });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+    const checkPassword = bcrypt.compare(password, user.password);
+    if (!checkPassword)
+      return res.status(401).json({ message: "Invalid password" });
+    const result = await User.updateOne({_id: userId}, {email, username})
+    
+    return res.status(200).json({user: result})
+  } catch (error: any) {
+    return res
+      .status(500)
+      .json({ message: "Error to update", error: error.message });  }
+}
+
+export const updatePassword = async (req:Request, res:Response) => {
+  const { newPassword,oldPassword} = req.body;
+  try {
+    const { userId } = req as AuthRequest;
+    if (!userId)
+      return res.status(404).json({
+        message: "user id not found",
+      });
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+    const checkPassword = bcrypt.compare(oldPassword, user.password);
+    if (!checkPassword)
+      return res.status(401).json({ message: "Invalid password" });
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const result = await User.updateOne({_id: userId}, {password: hashedPassword})
+    
+    return res.status(200).json({user: result})
+  } catch (error: any) {
+    return res
+      .status(500)
+      .json({ message: "Error to update", error: error.message });  }
+}
