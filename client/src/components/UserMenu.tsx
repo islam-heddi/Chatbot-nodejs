@@ -35,7 +35,12 @@ function UserMenu() {
   }
   return (
     <div className="flex flex-row justify-between items-center gap-5 p-2.5 border-r-2">
+      <div className="flex flex-row gap-4 items-center">
+        <div className="flex items-center justify-center h-7 w-7 bg-green-500 rounded-full text-white">
+          <p className="text-xl">{username.charAt(0).toUpperCase()}</p>
+        </div>
       <div>{username}</div>
+      </div>
          <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">Open</Button>
@@ -43,7 +48,7 @@ function UserMenu() {
       <DropdownMenuContent className="w-40" align="start">
         <DropdownMenuGroup>
           <DropdownMenuLabel>{username}</DropdownMenuLabel>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/profile")}>
             Profile
           </DropdownMenuItem>
           <DropdownMenuItem>
