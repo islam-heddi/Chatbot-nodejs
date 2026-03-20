@@ -105,7 +105,7 @@ export const updateInformation = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ message: "Email not found" });
     }
-    const checkPassword = bcrypt.compare(password, user.password);
+    const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword)
       return res.status(401).json({ message: "Invalid password" });
     const result = await User.updateOne({_id: userId}, {email, username})
@@ -114,7 +114,7 @@ export const updateInformation = async (req: Request, res: Response) => {
   } catch (error: any) {
     return res
       .status(500)
-      .json({ message: "Error to update", error: error.message });  }
+      .send({ message: "Error to update", error: error.message });  }
 }
 
 export const updatePassword = async (req:Request, res:Response) => {
@@ -129,7 +129,7 @@ export const updatePassword = async (req:Request, res:Response) => {
     if (!user) {
       return res.status(404).json({ message: "Email not found" });
     }
-    const checkPassword = bcrypt.compare(oldPassword, user.password);
+    const checkPassword = await bcrypt.compare(oldPassword, user.password);
     if (!checkPassword)
       return res.status(401).json({ message: "Invalid password" });
     const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -139,5 +139,5 @@ export const updatePassword = async (req:Request, res:Response) => {
   } catch (error: any) {
     return res
       .status(500)
-      .json({ message: "Error to update", error: error.message });  }
+      .send({ message: "Error to update", error: error.message });  }
 }

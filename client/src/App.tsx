@@ -6,9 +6,12 @@ import Chat from "./pages/Chat"
 import Auth from "./context/Auth"
 import Profile from "./pages/Profile"
 import Settings from "./pages/Settings"
+import { ToastContainer } from "react-toastify"
 function App() {
 
   return (
+    <>
+    <ToastContainer />
     <BrowserRouter>
     <Auth>
       <Routes>
@@ -21,6 +24,7 @@ function App() {
       </Routes>
       </Auth>
     </BrowserRouter>
+    </>
   )
 }
 

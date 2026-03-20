@@ -1,9 +1,13 @@
+import { PasswordConfirm } from "@/components/PasswordConfirm"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useUser } from "@/context/User"
+import { api } from "@/utils/api"
+import {  UPDATE_PASSWORD } from "@/utils/constants"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { useShallow } from "zustand/shallow"
 
 function Settings() {
@@ -18,6 +22,23 @@ function Settings() {
     const [currentPassword, setCurrentPassword] = useState<string>("")
     const [newPassword, setNewPassword] = useState<string>("")
     const [confimPassword, setConfirmPassword] = useState<string>("")
+
+
+    const handleUpdatePassword = () => {
+        if(newPassword !== confimPassword) return toast.error("new password does not match the confirm password")
+        else if(newPassword.length < 6) return toast.error("the password should be atleast 6 characters") 
+        api.patch(UPDATE_PASSWORD, {
+            oldPassword: currentPassword,
+            newPassword
+        })
+        .then(() => toast.success("password changed successfully"))
+        .catch(err => {
+            console.log(err)
+            toast.error("password have not changed")
+        })
+
+    }
+
     return (
     <div>
         <div className="inline-flex flex-col p-5">
@@ -32,8 +53,8 @@ function Settings() {
             <Label>Email :</Label>
             <Input type="email" value={email} placeholder="enter your email" onChange={(e) => setEmail(e.target.value)}/>
             <div className="flex flex-row gap-3">
-            <Button>Change</Button>
-            <Button onClick={() => {
+            <PasswordConfirm name={name} email={email} />
+            <Button variant={"outline"} onClick={() => {
                 setName(username)
                 setEmail(oldEmail)
             }}>Reset</Button>
@@ -48,11 +69,11 @@ function Settings() {
             <Label>New password</Label>
             <Input type="password" value={newPassword} placeholder="enter your new password" onChange={(e) => setNewPassword(e.target.value)}/>
 
-            <Label>Current password</Label>
+            <Label>Confirm password</Label>
             <Input type="password" value={confimPassword} placeholder="enter your confirm password" onChange={(e) => setConfirmPassword(e.target.value)}/>
             <div className="flex flex-row gap-3">
-            <Button className="bg-red-400">Change</Button>
-            <Button onClick={() => {
+            <Button onClick={() => handleUpdatePassword()} className="bg-red-400">Change</Button>
+            <Button variant={"outline"} onClick={() => {
                 setCurrentPassword("")
                 setConfirmPassword("")
                 setNewPassword("")
