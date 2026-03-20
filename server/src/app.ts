@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.VIEW_LINK,
   methods: ["GET","POST","PATCH","PUT","DELETE"],
   credentials: true
 }))
@@ -40,6 +40,7 @@ app.listen(PORT, () => {
   console.log(
     `the documentation is available at http://localhost:${PORT}/api/doc`,
   );
+  console.log(`the view is on ${process.env.VIEW_LINK}`)
 });
 
 export default app;
