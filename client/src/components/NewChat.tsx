@@ -20,7 +20,9 @@ function NewChat() {
         .catch(err => console.log(err))
     }
   return (
-    <Button className="m-2 w-2/3" onClick={() => handleCreateChat()}>New chat</Button>
+    <Button className="w-full" onClick={() => handleCreateChat()}>
+      New Chat
+    </Button>
   )
 }
 
