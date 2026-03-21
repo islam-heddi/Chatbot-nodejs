@@ -7,9 +7,19 @@ export default function ChatBot() {
   const messages = useChat(state => state.messages)
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-col h-[80vh] overflow-y-scroll w-[75vw] max-[1024px]:w-screen">
-      {messages.length < 1? <p className="p-4 grid place-items-center h-screen font-bold text-2xl">ask or start a new message</p> :messages.map((value,index) => <Fragment key={index}><Message role={value.role} message={value.content} /></Fragment>)}
+    <div className="flex flex-col h-screen w-full">
+      <div className="flex-1 overflow-y-auto p-4">
+        {messages.length < 1 ? (
+          <div className="flex items-center justify-center h-full">
+            <p className="text-2xl font-semibold text-gray-500">Ask or start a new message</p>
+          </div>
+        ) : (
+          messages.map((value, index) => (
+            <Fragment key={index}>
+              <Message role={value.role} message={value.content} />
+            </Fragment>
+          ))
+        )}
       </div>
       <SendMessage />
     </div>

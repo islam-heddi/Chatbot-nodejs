@@ -17,6 +17,25 @@ export default function History() {
     .catch((err) => console.log(err))
    }, [updateChats])
   return (
-    <div className="flex flex-col items-center w-2xl h-[90vh] border-r-2 max-w-2xs overflow-y-scroll max-[1024px]:max-w-none"><NewChat />{chats.length < 1? <p className="justify-self-center">No Message passed yet</p>: <div className="w-full">{chats.sort((a,b) => (new Date(b.createdAt as string)).getTime() - (new Date(a.createdAt as string)).getTime()).map((value,index) => <Fragment key={index}><ChatRoomComponent id={value._id} name={value.name} /></Fragment>)}</div>}</div>
+    <div className="flex flex-col flex-1">
+      <div className="p-4 border-b">
+        <NewChat />
+      </div>
+      <div className="flex-1 overflow-y-auto">
+        {chats.length < 1 ? (
+          <p className="p-4 text-center text-gray-500">No messages yet</p>
+        ) : (
+          <div className="p-2">
+            {chats
+              .sort((a, b) => (new Date(b.createdAt as string)).getTime() - (new Date(a.createdAt as string)).getTime())
+              .map((value, index) => (
+                <Fragment key={index}>
+                  <ChatRoomComponent id={value._id} name={value.name} />
+                </Fragment>
+              ))}
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
