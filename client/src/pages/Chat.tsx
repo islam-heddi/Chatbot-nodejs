@@ -24,12 +24,14 @@ function Chat() {
       {/* Mobile Sidebar */}
       {opened && (
         <div className="lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50" onClick={() => setOpened(false)}>
-          <div className="absolute left-0 top-0 h-full w-80 bg-white border-r" onClick={(e) => e.stopPropagation()}>
-            <div className="p-4 border-b">
+          <div className="absolute left-0 top-0 h-full w-80 bg-white border-r flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <div className="p-4 border-b flex-shrink-0">
               <Button onClick={() => setOpened(false)}>Close</Button>
             </div>
-            <History />
-            <UserMenu />
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <History />
+              <UserMenu />
+            </div>
           </div>
         </div>
       )}

@@ -17,7 +17,7 @@ export default function History() {
     .catch((err) => console.log(err))
    }, [updateChats])
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col flex-1">
       <div className="p-4 border-b">
         <NewChat />
       </div>
