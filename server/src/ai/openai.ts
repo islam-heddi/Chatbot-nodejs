@@ -8,7 +8,7 @@ const promptMessage = async (message: string) : Promise<string | undefined> => {
             apiKey: process.env.GEMINI_API_KEY
         })
         const chatCompletion = await openai.chat.completions.create({
-            model: "gemini-2.5-flash",
+            model: "gemini-2.5-flash", // feel free to change this to a different model, but make sure to check the openai documentation for the correct model name
              messages: [{ content: message, role: 'user' }],
         })
         return chatCompletion.choices[0].message.content as string
@@ -25,7 +25,7 @@ const titleMessage = async (message: string) : Promise<string | undefined> => {
             apiKey: process.env.GEMINI_API_KEY
         })
         const chatCompletion = await openai.chat.completions.create({
-            model: "gemini-2.5-flash",
+            model: "gemini-2.5-flash", // feel free to change this to a different model, but make sure to check the openai documentation for the correct model name
              messages: [{content: "your mission is to give only the title, and dont give a description", role: 'system'},{ content: message, role: 'user' }],
         })
         return chatCompletion.choices[0].message.content as string
