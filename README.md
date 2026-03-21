@@ -59,6 +59,7 @@ npm run dev
 - Dotenv
 - Nodemon
 - Swagger
+- OpenAI API
 
 ### Database
 - MongoDB
