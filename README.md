@@ -39,6 +39,9 @@ npm run dev
 
 ## Tech Stack
 
+### Language 
+- Typescript
+
 ### Frontend
 - React.js / Vite
 - Tailwind CSS
