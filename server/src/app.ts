@@ -12,9 +12,14 @@ import path from "path";
 import YAML from "yamljs";
 import aiRoute from "./routes/ai.routes.js"
 import cors from "cors"
+import { fileURLToPath } from "url";
 
-const documentationFile = YAML.load(path.join("doc", "api.yml"));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+const documentationFile = YAML.load(
+  path.join(__dirname, "..", "doc", "api.yml")
+);
 const app = express();
 connectDB();
 app.use(express.json());
