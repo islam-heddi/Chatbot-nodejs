@@ -60,7 +60,7 @@ export const registerUser = async (req: Request, res: Response) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 3600000,
     });
     return res.status(201).send({ newUser, token });
@@ -84,7 +84,12 @@ export const loginUser = async (req: Request, res: Response) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
       expiresIn: "1h",
     });
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,        // required on Vercel (HTTPS)
+      sameSite: "none",    // required for cross-origin
+      maxAge: 3600000,    // 1 hour
+    });
     return res.status(200).send({ user, token });
   } catch (error: any) {
     return res
