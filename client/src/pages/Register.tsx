@@ -5,24 +5,31 @@ import { Label } from "@/components/ui/label"
 import { api } from "@/utils/api"
 import { REGISTER } from "@/utils/constants"
 import type { AxiosResponse } from "axios"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 function Register() {
+  const [loading, startTransition] = useTransition()
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>("")
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
 
   const handleRegister = async () => {
-    api.post(REGISTER, {
-      email,username,password
-    }).then((res: AxiosResponse) => {
-      console.log(res)
-      navigate("/chat")
+    startTransition(async () => {
+      try {
+        const res : AxiosResponse = await api.post(REGISTER, {
+          email,username,password
+        })
+        console.log(res)
+        navigate("/chat")
+        toast.success("Registration successful! Welcome to the chat.")
+      } catch (error) {
+        toast.error("Registration failed. please try again.")
+      }
     })
-    .catch(err => console.log(err))
   }
 
   return (
@@ -65,7 +72,7 @@ function Register() {
             />
           </div>
           <div className="flex gap-2">
-            <Button onClick={() => handleRegister()} className="flex-1">Register</Button>
+            <Button disabled={loading} onClick={() => handleRegister()} className="flex-1">{loading? "Loading..." : "Register"}</Button>
             <Button
               variant="outline"
               onClick={() => {

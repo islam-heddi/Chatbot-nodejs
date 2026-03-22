@@ -4,23 +4,31 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { api } from "@/utils/api"
 import { LOGIN } from "@/utils/constants"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { Link } from "react-router-dom"
 import type { AxiosError, AxiosResponse } from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 function Login() {
+  const [loading, startTransition] = useTransition()
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const handleLogin = () => {
-    api.post(LOGIN, {
-      email, password
-    }).then((res: AxiosResponse) => {
-      console.log(res)
-      navigate("/chat")
+    startTransition(async () => {
+      try {
+        const res: AxiosResponse = await api.post(LOGIN, {
+          email, password
+        })
+        console.log(res)
+        navigate("/chat")
+        toast.success("Login success")
+      } catch (err: unknown) {
+        console.log(err as AxiosError)
+        toast.error("Login failed. Please check your credentials and try again.")
+      }
     })
-    .catch((err: AxiosError) => console.log(err))
   }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -52,7 +60,7 @@ function Login() {
             />
           </div>
           <div className="flex gap-2">
-            <Button onClick={() => handleLogin()} className="flex-1">Login</Button>
+            <Button disabled={loading} onClick={() => handleLogin()} className="flex-1">{loading? "Loading...": "Login"}</Button>
             <Button
               variant="outline"
               onClick={() => {
