@@ -9,6 +9,7 @@ import { useHistory } from "@/context/History"
 import { useShallow } from "zustand/shallow"
 function SendMessage() {
     const [loading, start] = useTransition()
+    const updateLoading = useChat(state => state.updateLoading)
     const chatId = useChat(state => state.chatId)
     const userId = useUser(state => state.userId)
     const addChat = useHistory(state => state.addChat)
@@ -40,6 +41,7 @@ function SendMessage() {
         })
         start(async () => {
           try {
+            updateLoading(true)
             const res = await api.post(PROMPT, {
               chatId,
               message
@@ -47,6 +49,8 @@ function SendMessage() {
             addMessages(res.data.result)
           } catch (err) {
             console.log(err)
+          } finally {
+            updateLoading(false)
           }
         })
     }

@@ -2,6 +2,7 @@ import { Fragment } from "react/jsx-runtime";
 import Message from "./Message";
 import SendMessage from "./SendMessage";
 import { useChat } from "@/context/Chat";
+import Loading from "./Loading";
 
 export default function ChatBot() {
   const messages = useChat(state => state.messages)
@@ -20,6 +21,7 @@ export default function ChatBot() {
             </Fragment>
           ))
         )}
+        <Loading loading={useChat(state => state.loading)} />
       </div>
       <SendMessage />
     </div>

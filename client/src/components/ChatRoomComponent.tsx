@@ -7,11 +7,15 @@ function ChatRoomComponent({id, name}: {id: string, name: string}) {
   const updateChatId = useChat(state => state.updateChatId)
   const updateChatName = useChat(state => state.updateChatName)
   const updateMessages = useChat(state => state.updateMessages)
+  const updateLoading = useChat(state => state.updateLoading)
   const handleSelect = () => {
     updateChatId(id)
     updateChatName(name)
     api.get(GET_MESSAGES + id)
-    .then(res => updateMessages(res.data))
+    .then(res => {
+      updateMessages(res.data)
+      updateLoading(false)
+    })
     .catch(err => console.log(err))
   }
 
