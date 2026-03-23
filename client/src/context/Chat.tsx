@@ -15,6 +15,8 @@ type ChatType = {
     chatId: string;
     chatName: string;
     messages: IMessage[];
+    loading: boolean;
+    updateLoading: (loading: boolean) => void;
     updateChatId: (id: string) => void
     updateChatName: (name: string) => void
     updateMessages: (messages: IMessage[]) => void
@@ -26,6 +28,8 @@ export const useChat = create<ChatType>()(persist((set, get) => ({
     chatId: "",
     chatName: "",
     messages: [],
+    loading: false,
+    updateLoading: (loading: boolean) => set({loading}),
     updateChatId: (id: string) => set({chatId: id}),
     updateChatName: (name: string) => set({chatName: name}),
     updateMessages: (messages: IMessage[]) => set({messages}),
@@ -34,6 +38,7 @@ export const useChat = create<ChatType>()(persist((set, get) => ({
         chatId: "",
         chatName: "",
         messages: [],
+        loading: false
     })
 }), {
     name: "chat-store"
