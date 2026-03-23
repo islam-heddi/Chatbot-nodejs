@@ -7,7 +7,7 @@ function Loading({loading}: {loading: boolean}) {
       >
         <div className="flex flex-row items-center gap-1.5 flex-wrap">
         <BeatLoader size={10} />
-        <p className="text-sm">Loading</p>
+        <p className="text-sm">Ai is Thinking</p>
         </div>
       </div>
     </div>
