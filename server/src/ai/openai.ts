@@ -1,5 +1,7 @@
 import {OpenAI} from "openai"
 
+const name = "islam" // feel free to replace it with your name :)
+
 const promptMessage = async (message: string) : Promise<string | undefined> => {
     if(!message) return "please send a message"
     try {
@@ -9,7 +11,7 @@ const promptMessage = async (message: string) : Promise<string | undefined> => {
         })
         const chatCompletion = await openai.chat.completions.create({
             model: "gemini-2.5-flash", // feel free to change this to a different model, but make sure to check the openai documentation for the correct model name
-             messages: [{ content: message, role: 'user' }],
+             messages: [{role: 'system', content: `your name is ${name}`},{ content: message, role: 'user' }],
         })
         return chatCompletion.choices[0].message.content as string
     } catch (error) {
